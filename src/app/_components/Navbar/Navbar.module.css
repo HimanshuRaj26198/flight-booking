@@ -1,0 +1,60 @@
+.navbar {
+    display: flex;
+    flex-direction: column;
+    padding: 0 1%;
+    padding-bottom: 2%;
+    border-bottom: 0.7px solid rgba(0, 0, 0, 0.3);
+    background-color: #e76f51;
+}
+
+.top_sec {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+    font-size: 2.2vmin;
+}
+
+.mid_sec {
+    display: flex;
+    justify-content: flex-start;
+    width: 100%;
+    font-size: 3vmin;
+}
+
+.bottom_sec {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+
+}
+
+.navmenus {
+    display: flex;
+    gap: 10px;
+    list-style: none;
+    flex-wrap: wrap;
+}
+
+.navmenus li {
+    font-size: 2.9vmin;
+    cursor: pointer;
+    font-weight: 700;
+    color: #264653;
+}
+
+
+.navmenus li:hover {
+    color: white;
+}
+
+.call_us {
+    color: black;
+    background-color: white;
+    padding: 1px 2px;
+    border-radius: 2px;
+}
+
+.call_us a {
+    color: red;
+    text-decoration: none;
+}
