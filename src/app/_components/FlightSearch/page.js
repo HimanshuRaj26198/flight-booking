@@ -1,11 +1,11 @@
 "use client"
-import FlightSelector from "../FlightTypeSelector/page";
 import Style from "./FlightSearch.module.css";
 import Image from "next/image";
-import FlightList from "../../../../lib/data/airports.json";
+import FlightList from "../../../../lib/data/airport.json";
 import { useRef, useState, useEffect } from "react";
 const FlightSearchForm = () => {
-
+    const [selected, setSelected] = useState(null);
+    const options = ["Round Trip", "One Way"];
     const [filteredFromAirports, setFilteredFromAirports] = useState([]);
     const [fromSugesstionVisible, setFromSuggestionVisible] = useState(false);
     const [filteredToAirpotts, setFilteredToAirports] = useState([]);
@@ -43,7 +43,7 @@ const FlightSearchForm = () => {
         if (fromAirport.current.value != "") {
             setFromSuggestionVisible(true);
             filteredData = FlightList.filter(a => {
-                if (a.name.includes(fromAirport.current.value) || a.code.includes(fromAirport.current.value) || a.country.includes(fromAirport.current.value) || a.city.includes(fromAirport.current.value)) {
+                if (a.name.includes(fromAirport.current.value) || a.iata?.includes(fromAirport.current.value) || a.country.includes(fromAirport.current.value) || a.city.includes(fromAirport.current.value)) {
                     return a;
                 }
             });
@@ -56,7 +56,7 @@ const FlightSearchForm = () => {
         if (toAirport.current.value != "") {
             setToSuggestionVisible(true);
             filteredData = FlightList.filter(a => {
-                if (a.name.includes(toAirport.current.value) || a.code.includes(toAirport.current.value) || a.country.includes(toAirport.current.value) || a.city.includes(toAirport.current.value)) {
+                if (a.name.includes(toAirport.current.value) || a.iata.includes(toAirport.current.value) || a.country.includes(toAirport.current.value) || a.city.includes(toAirport.current.value)) {
                     return a;
                 }
             });
@@ -66,7 +66,15 @@ const FlightSearchForm = () => {
 
     return <div className={Style.flight_search_container} >
         <div className={Style.left_sec} >
-            <FlightSelector />
+            <div className={Style.type_section} >
+                <div className={Style.types} >
+                    {options.map((a, index) => {
+                        return <div key={index} tabIndex={0} onClick={() => setSelected(index)} className={`${Style.type_item} ${selected === index ? Style.selected : ''}`} >
+                            <p>{a}</p>
+                        </div>
+                    })}
+                </div>
+            </div>
             <div className={Style.form_container} >
                 <form>
                     <div className={Style.input_container} >
@@ -80,7 +88,7 @@ const FlightSearchForm = () => {
                                             <p>{a.state}</p>
                                             <p> {a.country} </p>
                                         </div>
-                                        <div className={Style.flight_container} > <p> {a.code} </p>
+                                        <div className={Style.flight_container} > <p> {a.iata} </p>
                                             <p className={Style.airportName} >{a.name}</p> </div>
                                     </div>  </li>
                                 })}
@@ -99,7 +107,7 @@ const FlightSearchForm = () => {
                                             <p>{a.state}</p>
                                             <p> {a.country} </p>
                                         </div>
-                                        <div className={Style.flight_container} > <p> {a.code} </p>
+                                        <div className={Style.flight_container} > <p> {a.iata} </p>
                                             <p className={Style.airportName} >{a.name}</p> </div>
                                     </div>  </li>
                                 })}
@@ -112,10 +120,10 @@ const FlightSearchForm = () => {
                             <label>Depart</label>
                             <input type="date" placeholder="Depart" />
                         </div>
-                        <div className={Style.input_container} >
+                        {selected === 0 && <div className={Style.input_container} >
                             <label>Return</label>
                             <input type="date" placeholder="RETURN" />
-                        </div>
+                        </div>}
                     </div>
                     <div className={Style.option_container} >
                         <div className={Style.input_container} >
